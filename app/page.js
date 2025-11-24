@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+// Reverted to standard imports to ensure compatibility in all environments
 import { 
   ChevronRight, Cpu, Eye, Activity, Database, BarChart3, Shield, Zap, Menu, X, 
   ArrowRight, CheckCircle, Sparkles, Globe, Layers, Target, Gauge, Brain, 
@@ -268,7 +269,7 @@ export default function Home() {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-black/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('home')}>
-            {/* REPLACED IMG WITH CUSTOM LOGO COMPONENT */}
+            {/* Custom SVG Logo */}
             <Logo />
           </div>
 
@@ -351,8 +352,12 @@ export default function Home() {
               <div className="pt-8 border-t border-white/10 flex items-center gap-6 text-sm text-gray-500 font-medium">
                 <div className="flex -space-x-2">
                   {[1,2,3,4].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-gray-800 flex items-center justify-center overflow-hidden">
-                       <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i*13}`} alt="user" />
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-gray-800 flex items-center justify-center overflow-hidden relative">
+                       <img 
+                         src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i*13}`} 
+                         alt="user" 
+                         className="object-cover w-full h-full"
+                       />
                     </div>
                   ))}
                   <div className="w-8 h-8 rounded-full border-2 border-black bg-gray-800 flex items-center justify-center text-xs text-white">
@@ -368,12 +373,14 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-3xl blur-2xl transform rotate-3"></div>
               <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-gray-900 h-[600px]">
                 
-                {/* Background Image Layer */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: `url(${images.hero})` }}
-                  aria-label="AR Interface Background"
-                />
+                {/* Background Image Layer - Fixed using div background for Hero to support complex layering easily */}
+                <div className="absolute inset-0">
+                  <img 
+                    src={images.hero}
+                    alt="AR Interface Background"
+                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
                 
                 {/* Dark Overlay for Readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30"></div>
@@ -496,7 +503,7 @@ export default function Home() {
                  alt={solutions[activeSolutionTab].title}
                  className="absolute inset-0 w-full h-full object-cover opacity-40 transition-opacity duration-500"
                />
-               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent p-8 md:p-12 flex flex-col justify-center">
+               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent p-8 md:p-12 flex flex-col justify-center z-10">
                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
                    {solutions[activeSolutionTab].icon}
                  </div>
@@ -657,7 +664,7 @@ export default function Home() {
              <div className="order-1 lg:order-2 space-y-8">
                <h2 className="text-4xl md:text-5xl font-bold">Tangible Results <br/><span className="text-gray-500">from Day One</span></h2>
                <p className="text-gray-300 text-lg leading-relaxed">
-                 Traditional maintenance is reactive and slow. AIQmate transforms your workforce into a proactive, data-driven unit. We don't just offer software; we offer a fundamental shift in operational efficiency.
+                 Traditional maintenance is reactive and slow. AIQmate transforms your workforce into a proactive, data-driven unit. We don&apos;t just offer software; we offer a fundamental shift in operational efficiency.
                </p>
                <ul className="space-y-4">
                  {["Instant Knowledge Transfer", "Reduced Equipment Downtime", "Perfect Compliance Record"].map((item, i) => (
@@ -676,7 +683,13 @@ export default function Home() {
 
       {/* Resources & Demo Video */}
       <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0">
+          <img 
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80"
+            alt="Background"
+            className="object-cover w-full h-full opacity-10"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#050508] via-[#050508]/90 to-transparent"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
@@ -685,7 +698,11 @@ export default function Home() {
            <div className="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20 group cursor-pointer aspect-video bg-black" onClick={() => setIsVideoPlaying(!isVideoPlaying)}>
              {!isVideoPlaying ? (
                <>
-                 <img src={images.demo} alt="Demo" className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                 <img 
+                   src={images.demo} 
+                   alt="Demo" 
+                   className="object-cover w-full h-full opacity-60 group-hover:scale-105 transition-transform duration-700" 
+                 />
                  <div className="absolute inset-0 flex items-center justify-center">
                    <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
                      <Play className="w-10 h-10 text-white fill-white ml-2" />
@@ -755,7 +772,7 @@ export default function Home() {
               Founded in 2019 by aerospace engineers and computer vision experts, AIQmate was built to solve a single problem: the knowledge gap in industrial maintenance. 
             </p>
             <p className="text-gray-400 text-lg leading-relaxed">
-              We believe that when you give technicians superpowers—instant information, x-ray vision, and expert guidance—you don't just fix machines; you empower people.
+              We believe that when you give technicians superpowers—instant information, x-ray vision, and expert guidance—you don&apos;t just fix machines; you empower people.
             </p>
             
             <div className="pt-8 grid grid-cols-2 gap-8">
@@ -770,9 +787,13 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative w-full h-[400px] lg:h-[500px]">
              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-3xl blur-2xl"></div>
-             <img src={images.about} alt="Team" className="relative rounded-3xl border border-white/10 shadow-2xl" />
+             <img 
+               src={images.about} 
+               alt="Team" 
+               className="relative object-cover w-full h-full rounded-3xl border border-white/10 shadow-2xl" 
+             />
           </div>
         </div>
       </section>
@@ -808,7 +829,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-2 mb-6">
-                {/* REPLACED IMG WITH CUSTOM LOGO COMPONENT */}
+                {/* Custom SVG Logo */}
                 <Logo />
               </div>
               <p className="text-gray-500 max-w-sm mb-8">
